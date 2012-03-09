@@ -1,0 +1,36 @@
+2012-03-01
+
+FREESURFER FOR MULTIMODAL SUBJECTS =================================================
+  queue reconall -all (freesurfer) for subjects that haven't been run
+
+  rawdir     /data/Luna1/Raw/MultiModal/*/*mprage*/      where structural scans are found
+  niidir     /data/Luna1/Multimodal/ANTI/*/mprage/       where structural nii.gz is saved
+  FSdir      /data/Luna1/Multimodal/FS_Subjects/         where freesurfer puts its output
+          
+          wallace:/data/Luna1 is gromit:/raid/r3/p2/Luna
+
+
+FILES ==============================================================================
+  surf.sh            ---    check for subjects for which freesurfer has not been run
+                             -> give rundate of incomplete runs
+                             -> check for nii in ANTI/mprage, create if DNE
+                             -> qsub subjects that haven't been run
+
+  queReconall.sh     ---     qsub executed script
+                              -> set environment to gromit 
+                              -> run reconall
+
+
+  ni_path_local.bash ---     mode of $LUNADIR/ni_tools/ni_path.bash
+                           -> check which host and set LUNADIR before adding paths
+
+
+NOTES ==============================================================================
+
+  o  ideally, surf.sh is run inside a log dir so torque output files are not scattered 
+
+
+  o  log is in ANTI subj folder
+     can watch process with tail
+       e.g.
+       tail -f /data/Luna1/Multimodal/ANTI/10909/10909_fsrecon.log
