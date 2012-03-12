@@ -34,3 +34,9 @@ NOTES ==========================================================================
      can watch process with tail
        e.g.
        tail -f /data/Luna1/Multimodal/ANTI/10909/10909_fsrecon.log
+
+  o  symbolic links found issue with nfs naming across mounts on different machines (using torque)
+     corrected with
+      surf.sh |perl -lne 'print $1 if m/UNFINISHED:\s+(\d+) s/' | xargs -n1 recon-all -balabels -label-exvivo-ec -sid
+      
+      (only redo last two steps [where fsaverage is needed, but sym link broken])

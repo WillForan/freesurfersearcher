@@ -82,6 +82,8 @@ ls -d $MMDIR/* |
 
    if [ -z "$finishdate" ]; then
 
+     niidir=$NIIDIR/${subjctid}/mprage/
+     niifile=$(/bin/ls $niidir/*nii.gz | head -n1)
 
      # how long ago was the job started
      startdateSeconds=$(date -d "$(sed 1p -n $FSLOG)" "+%s")
@@ -96,6 +98,10 @@ ls -d $MMDIR/* |
      echo -e "\t$FSLOG"
      egrep -v '^\s*$' $FSLOG|tail -n2 | sed -e 's/^/ ➞	/'
      echo
+    echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0) -N \"FS-$subjctid\" -v \ 
+    subjctid=\"$subjctid\",niifile=\"${niifile##$LUNADIR}\" \ 
+    $(dirname $0)/queReconall.sh "
+    echo
 
    # or we don't have to do anything
    else
