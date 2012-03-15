@@ -27,7 +27,7 @@ FILES ==========================================================================
 
 NOTES ==============================================================================
 
-  o  ideally, surf.sh is run inside a log dir so torque output files are not scattered 
+  o  stderr/out in ./logs/ (directed by -e and -o of qsub)
 
 
   o  log is in ANTI subj folder
