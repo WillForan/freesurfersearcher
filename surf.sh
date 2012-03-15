@@ -165,7 +165,8 @@ ls -d $MMDIR/* |
    # gromit specific path
 
    set -ex
-    qsub -h -m abe -M $EMAILS \
+    # use -h to hold by default
+    qsub -m abe -M $EMAILS \
          -e $(dirname $0)/log  -o $(dirname $0) \
          -N "FS-$subjctid" \
          -v subjctid="$subjctid",niifile="${niifile##$LUNADIR}" \
