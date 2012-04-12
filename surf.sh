@@ -98,10 +98,11 @@ ls -d $MMDIR/* |
      echo -e "\t$FSLOG"
      egrep -v '^\s*$' $FSLOG|tail -n2 | sed -e 's/^/ ➞	/'
      echo
-    echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0) -N \"FS-$subjctid\" -v \ 
+     echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0) -N \"FS-$subjctid\" -v \ 
     subjctid=\"$subjctid\",niifile=\"${niifile##$LUNADIR}\" \ 
     $(dirname $0)/queReconall.sh "
-    echo
+     echo
+     echo "SUBJECTS_DIR=/raid/r3/p2/Luna/Multimodal/FS_Subjects/ recon-all -sid $subjctid -all"
 
    # or we don't have to do anything
    else
@@ -140,15 +141,16 @@ ls -d $MMDIR/* |
       echo -e "\talready has a ANTI dir ($niidir) with *nii.gz";
    else
       echo -e "\tcreateing nifti using DCM in $ragedir\n\t mv to $niidir"
-      set -e
+      set -ex
 
-      dcm2nii -d N -e N -f N -p N -x N -r N $ragedir/* 
+      /data/Luna1/ni_tools/mricron/dcm2nii \
+          -d N -e N -f N -p N -x N -r N $ragedir/MR*
 
       # move newest created nifity to niidir
       mkdir -p $niidir; 
       mv $(/bin/ls -1tc $ragedir/*nii.gz|head -n1) $niidir
 
-      set +e
+      set +ex
    fi
 
    niifile=$(/bin/ls $niidir/*nii.gz | head -n1)
