@@ -144,7 +144,7 @@ ls -d $MMDIR/* |
       set -ex
 
       /data/Luna1/ni_tools/mricron/dcm2nii \
-          -d N -e N -f N -p N -x N -r N $ragedir/MR*
+          -d N -e N -f N -p N -x N -r N $(find $ragedir -name MR\*)
 
       # move newest created nifity to niidir
       mkdir -p $niidir; 
