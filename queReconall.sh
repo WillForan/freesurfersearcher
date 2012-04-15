@@ -50,3 +50,4 @@ echo log:       	$logfile
 echo
 set -ex
 recon-all -i $LUNADIR/$niifile -sid ${subjctid} -all 2>&1 | tee $logfile
+chmod -R g+rw $SUBJECTS_DIR/${subjctid}
