@@ -98,7 +98,7 @@ ls -d $MMDIR/* |
      echo -e "\t$FSLOG"
      egrep -v '^\s*$' $FSLOG|tail -n2 | sed -e 's/^/ ➞	/'
      echo
-     echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0) -N \"FS-$subjctid\" -v \ 
+     echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0)/log -N \"FS-$subjctid\" -v \ 
     subjctid=\"$subjctid\",niifile=\"${niifile##$LUNADIR}\" \ 
     $(dirname $0)/queReconall.sh "
      echo
@@ -169,7 +169,7 @@ ls -d $MMDIR/* |
    set -ex
     # use -h to hold by default
     qsub -m abe -M $EMAILS \
-         -e $(dirname $0)/log  -o $(dirname $0) \
+         -e $(dirname $0)/log  -o $(dirname $0)/log \
          -N "FS-$subjctid" \
          -v subjctid="$subjctid",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
