@@ -143,7 +143,7 @@ ls -d $MMDIR/* |
       echo -e "\tcreateing nifti using DCM in $ragedir\n\t mv to $niidir"
       set -ex
 
-      /data/Luna1/ni_tools/mricron/dcm2nii \
+      $LUNADIR/ni_tools/mricron/dcm2nii \
           -d N -e N -f N -p N -x N -r N $(find $ragedir -name MR\*)
 
       # move newest created nifity to niidir
@@ -171,7 +171,7 @@ ls -d $MMDIR/* |
     qsub -m abe -M $EMAILS \
          -e $(dirname $0)/log  -o $(dirname $0)/log \
          -N "FS-$subjctid" \
-         -v subjctid="$subjctid",niifile="${niifile##$LUNADIR}" \
+         -v subjctid="${subjctid}_${subj_date}",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
 
    set +ex
