@@ -60,11 +60,15 @@ ls -d $MMDIR/* |
   #
   ####
 
-  # ls'ing the dir for each subject might not be efficient?
-  if ls -d $SUBJECTS_DIR/$subjctid 1>/dev/null 2>&1 ; then
+  # subject directory could be .../subj or .../subj_date
+  FSDIR=$SUBJECTS_DIR/$subjctid
+  [ ! -d $FSDIR] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
+
+  # we actually have an FSDIR (as either subj or subj_date
+  if [ -d "$FSDIR" ] ; then
 
    
-   FSLOG=$SUBJECTS_DIR/$subjctid/scripts/recon-all.log
+   FSLOG=$FSDIR/scripts/recon-all.log
 
    finishdate=$(perl -lne 'print $1 if m/finished without error at (.*$)/' $FSLOG)
 
@@ -76,7 +80,7 @@ ls -d $MMDIR/* |
    fi
 
    #
-   # started but didn't finish! 
+   # started but didn't finish!  (zero length string returned by perl search)
    # how long has it been, how close are we
    #
 
@@ -171,7 +175,7 @@ ls -d $MMDIR/* |
     qsub -m abe -M $EMAILS \
          -e $(dirname $0)/log  -o $(dirname $0)/log \
          -N "FS-$subjctid" \
-         -v subjctid="${subjctid}_${subj_date}",niifile="${niifile##$LUNADIR}" \
+         -v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
 
    set +ex
