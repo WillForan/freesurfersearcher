@@ -62,7 +62,7 @@ ls -d $MMDIR/* |
 
   # subject directory could be .../subj or .../subj_date
   FSDIR=$SUBJECTS_DIR/$subjctid
-  [ ! -d $FSDIR] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
+  [ ! -d "$FSDIR" ] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
 
   # we actually have an FSDIR (as either subj or subj_date
   if [ -d "$FSDIR" ] ; then

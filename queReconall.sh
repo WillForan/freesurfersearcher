@@ -40,17 +40,19 @@ SUBJECTS_DIR=$LUNADIR/Multimodal/FS_Subjects
 
 
 # RUN!  --- log is in ANTI/subject/ b/c FS hasn't created FS DIR yet
-logfile=${niidir%mprage/}/${subjctid}_fsrecon.log 
+#logfile=${niidir%mprage/}/${subjctid}_fsrecon.log 
+#logfiledir=$(dirname $logfile)
+#[ -d  $logfiledir ] || mkdir -p $logfiledir
 
 echo LUNADIR:   	$LUNADIR
 echo SUBJECTS_DIR:	$SUBJECTS_DIR
 echo niidir:     	$niidr
 echo niifile:     	$niifile
-echo log:       	$logfile
+#echo log:       	$logfile
 echo
 
 set -ex
-recon-all -i $LUNADIR/$niifile -sid ${subjctid} -all 2>&1 | tee $logfile
+recon-all -i $LUNADIR/$niifile -sid ${subjctid} -all #2>&1 | tee $logfile
 
 chmod -R g+rw $SUBJECTS_DIR/${subjctid}
 chmod -R g+rw $LUNADIR/Multimodal/ANTI/${subjctid}
