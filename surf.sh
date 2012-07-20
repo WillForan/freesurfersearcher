@@ -62,7 +62,8 @@ ls -d $MMDIR/* |
 
   # subject directory could be .../subj or .../subj_date
   FSDIR=$SUBJECTS_DIR/$subjctid
-  [ ! -d "$FSDIR" ] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
+  # to use scandate in FS name, also change -v SUBJECTID in qsub
+  #[ ! -d "$FSDIR" ] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
 
   # we actually have an FSDIR (as either subj or subj_date
   if [ -d "$FSDIR" ] ; then
@@ -177,6 +178,8 @@ ls -d $MMDIR/* |
          -N "FS-$subjctid" \
          -v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
+         # if we want to include date
+         #-v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
 
    set +ex
 
