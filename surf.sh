@@ -176,7 +176,7 @@ ls -d $MMDIR/* |
     qsub -m abe -M $EMAILS \
          -e $(dirname $0)/log  -o $(dirname $0)/log \
          -N "FS-$subjctid" \
-         -v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
+         -v subjctid="${subjctid}",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
          # if we want to include date
          #-v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
