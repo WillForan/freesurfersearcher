@@ -130,12 +130,12 @@ ls -d $MMDIR/* |
    
    # everyone should have an mprage dir
    ragedir=$(ls -d $fullpath/*mprage* 2>/dev/null)
-   if [ -z "$ragedir" ]; then 
+   if [ -z "$ragedir" -a "$subjctid" != "10903" ]; then 
       echo -e "SKIPPING:\t$subjctid has no *mprage*: $fullpath"; continue; 
    fi
 
 
-   echo "===  $subjctid"
+   #echo "===  $subjctid"
 
    niidir=$NIIDIR/${subjctid}/mprage/
           #$LUNADIR/Multimodal/ANTI/subj/mprage
