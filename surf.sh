@@ -111,7 +111,8 @@ ls -d $MMDIR/* |
 
    # or we don't have to do anything
    else
-    echo "# $subjctid already complete"
+    # this just floods the email. Its not that informative
+    #echo "# $subjctid already complete"
    fi
 
 
