@@ -61,7 +61,8 @@ ls -d $MMDIR/* |
   ####
 
   # subject directory could be .../subj or .../subj_date
-  FSDIR=$SUBJECTS_DIR/$subjctid
+  #FSDIR=$SUBJECTS_DIR/$subjctid
+  FSDIR=$SUBJECTS_DIR/$subj_date
   # to use scandate in FS name, also change -v SUBJECTID in qsub
   #[ ! -d "$FSDIR" ] && FSDIR=$SUBJECTS_DIR/${subjctid}_${scandate} # should be same as subj_date
 
@@ -75,8 +76,8 @@ ls -d $MMDIR/* |
 
 
    # skip if it is already in the queue
-   if qstat |grep "FS-$subjctid " 1>/dev/null 2>&1; then 
-     echo "# FS-$subjctid is already in the queue. Skip"
+   if qstat -a |grep "FS-$subj_date " 1>/dev/null 2>&1; then 
+     echo "# FS-$subj_date is already in the queue. Skip"
      continue;
    fi
 
@@ -87,12 +88,13 @@ ls -d $MMDIR/* |
 
    if [ -z "$finishdate" ]; then
 
-     niidir=$NIIDIR/${subjctid}/mprage/
+     #niidir=$NIIDIR/${subjctid}/mprage/
+     niidir=$NIIDIR/${subj_date}/mprage/
      niifile=$(/bin/ls $niidir/*nii.gz | head -n1)
 
      # how long ago was the job started
      startdateSeconds=$(date -d "$(sed 1p -n $FSLOG)" "+%s")
-     echo -ne "UNFINISHED:\t$subjctid started "
+     echo -ne "UNFINISHED:\t$subj_date started "
      echo "scale=2;($todaySeconds - $startdateSeconds)/86400" |bc -l  |tr -d "\n"
      echo -ne " days ago; "
 
@@ -103,14 +105,14 @@ ls -d $MMDIR/* |
      echo -e "\t$FSLOG"
      egrep -v '^\s*$' $FSLOG|tail -n2 | sed -e 's/^/ ➞	/'
      echo
-     echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0)/log -N \"FS-$subjctid\" -v \ 
-    subjctid=\"$subjctid\",niifile=\"${niifile##$LUNADIR}\" \ 
+     echo -e "\tqsub -h -m abe -M $EMAILS -e $(dirname $0)/log  -o $(dirname $0)/log -N \"FS-$subj_date\" -v \ 
+    subjctid=\"$subj_date\",niifile=\"${niifile##$LUNADIR}\" \ 
     $(dirname $0)/queReconall.sh "
      echo
-     echo "SUBJECTS_DIR=/raid/r3/p2/Luna/Multimodal/FS_Subjects/ recon-all -sid $subjctid -all"
+     echo "SUBJECTS_DIR=/raid/r3/p2/Luna/Multimodal/FS_Subjects/ recon-all -sid $subj_date -all"
 
    # or we don't have to do anything
-   else
+   #else
     # this just floods the email. Its not that informative
     #echo "# $subjctid already complete"
    fi
@@ -139,7 +141,8 @@ ls -d $MMDIR/* |
 
    #echo "===  $subjctid"
 
-   niidir=$NIIDIR/${subjctid}/mprage/
+   #niidir=$NIIDIR/${subjctid}/mprage/
+   niidir=$NIIDIR/${subj_date}/mprage/
           #$LUNADIR/Multimodal/ANTI/subj/mprage
    #ragedir ../Raw/.../*mprage*/
 
@@ -177,8 +180,8 @@ ls -d $MMDIR/* |
     # use -h to hold by default
     qsub -m abe -M $EMAILS \
          -e $(dirname $0)/log  -o $(dirname $0)/log \
-         -N "FS-$subjctid" \
-         -v subjctid="${subjctid}",niifile="${niifile##$LUNADIR}" \
+         -N "FS-$subj_date" \
+         -v subjctid="${subj_date}",niifile="${niifile##$LUNADIR}" \
          $(dirname $0)/queReconall.sh 
          # if we want to include date
          #-v subjctid="${subjctid}_${scandate}",niifile="${niifile##$LUNADIR}" \
